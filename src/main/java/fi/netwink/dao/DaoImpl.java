@@ -1,6 +1,7 @@
 package fi.netwink.dao;
 
 import fi.netwink.entity.Product;
+import fi.netwink.entity.Review;
 import fi.netwink.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -24,19 +25,21 @@ public class DaoImpl implements Dao {
 
     private List<User> users;
 
+    private List<Review> reviews;
+
 
     public List<Product> getProducts() {
 
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<Product> query = currentSession.createQuery("from Product where user_id=1", Product.class);
+        Query<Product> query = currentSession.createQuery("from Product", Product.class);
         List<Product> products = query.getResultList();
         return products;
     }
 
-    public List<Product> getProductsByUserId(int userId) {
+    public List<Product> getProductsByUserId(int user_id) {
 
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<Product> query = currentSession.createQuery("from Product where user_id=:userId", Product.class);
+        Query<Product> query = currentSession.createQuery("from Product where user_id=:user_id", Product.class).setParameter("user_id", user_id);
         List<Product> products = query.getResultList();
         return products;
     }
@@ -88,6 +91,41 @@ public class DaoImpl implements Dao {
         Query query= currentSession.createQuery("DELETE from Users where id=:userId");
         query.setParameter("userId", userId);
         query.executeUpdate();
+    }
+
+    /**
+     *
+     * @param product_id
+     * @return
+     */
+
+    @Override
+    public List<Review> getReviewByProductId(int product_id) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query<Review> query = currentSession.createQuery("from Review where product_id=:product_id", Review.class).setParameter("product_id", product_id);
+        List<Review> reviews = query.getResultList();
+        return reviews;
+    }
+
+    @Override
+    public Review getReview(int reviewId) {
+        return null;
+    }
+
+    @Override
+    public void saveReview(Review review) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.saveOrUpdate(review);
+
+    }
+
+    @Override
+    public void deleteReview(int reviewId) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Query query= currentSession.createQuery("DELETE from Review where id=:reviewId");
+        query.setParameter("reviewId", reviewId);
+        query.executeUpdate();
+
     }
 
 

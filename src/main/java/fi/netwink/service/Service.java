@@ -1,6 +1,7 @@
 package fi.netwink.service;
 
 import fi.netwink.entity.Product;
+import fi.netwink.entity.Review;
 import fi.netwink.entity.User;
 
 import java.util.List;
@@ -25,5 +26,14 @@ public interface Service {
     public User getUser(int userId);
     public void saveUser(User user);
     public void deleteUser(int userId);
+
+    /**
+     *  Review Dao
+     */
+
+    public List<Review> getReviewByProductId(int productId);
+    public Review getReview(int reviewId);
+    public void saveReview(Review review);
+    public void deleteReview(int reviewId);
 
 }

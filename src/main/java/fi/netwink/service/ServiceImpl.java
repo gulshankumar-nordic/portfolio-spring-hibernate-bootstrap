@@ -2,6 +2,7 @@ package fi.netwink.service;
 
 import fi.netwink.dao.Dao;
 import fi.netwink.entity.Product;
+import fi.netwink.entity.Review;
 import fi.netwink.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +17,14 @@ public class ServiceImpl implements Service {
 
     private static List<User> users;
 
+    @Override
     @Transactional
     public List<Product> getProducts() {
 
         return dao.getProducts();
     }
 
+    @Transactional
     public List<Product> getProductsByUserId(int userId){
         return dao.getProductsByUserId(userId);
     }
@@ -69,6 +72,38 @@ public class ServiceImpl implements Service {
     public void deleteUser(int userId){
         dao.deleteUser(userId);
     }
+
+
+
+    /**
+     *  Review Dao
+     */
+
+
+    @Override
+    @Transactional
+    public List<Review> getReviewByProductId(int productId) {
+        return dao.getReviewByProductId(productId);
+    }
+
+    @Override
+    public Review getReview(int reviewId) {
+        return null;
+    }
+
+    @Override
+    public void saveReview(Review review) {
+
+    }
+
+    @Override
+    public void deleteReview(int reviewId) {
+
+    }
+
+
+
+
 
 
 }
